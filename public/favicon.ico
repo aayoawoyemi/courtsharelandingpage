@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <!-- Black background -->
+  <rect width="400" height="400" fill="#000000"/>
+  
+  <!-- Basketball hoop with candlestick chart -->
+  <g fill="#41B6B2" stroke="none">
+    <!-- Candlestick chart bars -->
+    <rect x="160" y="60" width="20" height="80" rx="4"/>
+    <rect x="192" y="40" width="20" height="100" rx="4"/>
+    <rect x="224" y="20" width="20" height="120" rx="4"/>
+    
+    <!-- Basketball hoop outline -->
+    <path d="M140,320 L140,260 C140,160 260,160 260,260 L260,320 M100,140 L300,140 C340,140 340,180 300,180 L100,180 C60,180 60,140 100,140 Z M140,180 L140,320 M260,180 L260,320 M200,180 L200,320" stroke="#41B6B2" stroke-width="12" fill="none"/>
+  </g>
+  
+  <!-- CourtShare text -->
+  <text x="200" y="370" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="white" text-anchor="middle">CourtShare</text>
+</svg> 
