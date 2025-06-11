@@ -4,19 +4,14 @@
 @keyframes scroll-stream {
   0% {
     transform: translateY(0);
-    will-change: transform;
   }
   100% {
     transform: translateY(-50%);
-    will-change: transform;
   }
 }
 
 .animate-scroll-stream {
-  animation: scroll-stream 90s cubic-bezier(0.25, 0.1, 0.25, 1) infinite;
-  transform: translate3d(0, 0, 0); /* Force GPU acceleration */
-  backface-visibility: hidden; /* Additional performance optimization */
-  perspective: 1000; /* Another optimization for smoother animations */
+  animation: scroll-stream 30s linear infinite;
 }
 
 @keyframes pulse {

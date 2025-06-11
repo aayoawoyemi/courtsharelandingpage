@@ -39,32 +39,23 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative h-screen overflow-hidden bg-black">
         <div className="absolute inset-0">
-          <div className="absolute inset-0 transform rotate-[-15deg] scale-[1.5] translate-y-[5%]">
+          <div className="absolute inset-0 transform rotate-[-15deg] scale-[1.25]">
             {columns.map((columnData, columnIndex) => (
               <div 
                 key={columnIndex} 
                 className="absolute"
                 style={{
                   left: `${(columnIndex / columnCount) * 100}%`,
-                  top: `-${columnIndex * 60}px`,
-                  width: '250px', // Reduced width for better spacing
+                  top: `-${columnIndex * 50}px`,
+                  width: '280px', // Fixed width for cards
                 }}
               >
-                <div 
-                  className="animate-scroll-stream" 
-                  style={{
-                    animationDuration: `${90 + columnIndex * 15}s`, 
-                    animationDelay: `${columnIndex * 5}s`, 
-                    animationTimingFunction:'cubic-bezier(0.25, 0.1, 0.25, 1)', 
-                    willChange:'transform',
-                    transform: 'translate3d(0, 0, 0)' // Force GPU acceleration
-                  }}
-                >
+                <div className="animate-scroll-stream" style={{animationDuration: `${80 + columnIndex * 20}s`, animationDelay: `${columnIndex * 6}s`, animationTimingFunction:'linear', willChange:'transform'}}>
                   {/* First set of cards */}
                   {columnData.map((p) => {
                     const { _internalKey, ...playerProps } = p;
                     return (
-                      <div key={_internalKey} className="mb-5 transform hover:scale-105 transition-transform duration-300">
+                      <div key={_internalKey} className="mb-4 transform hover:scale-105 transition-transform duration-300">
                         <PlayerHeroCard {...playerProps} team={playerProps.team || ''} />
                       </div>
                     );
@@ -74,7 +65,7 @@ export default function Home() {
                   {columnData.map((p) => {
                     const { _internalKey, ...playerProps } = p;
                     return (
-                      <div key={`dup-${_internalKey}`} className="mb-5">
+                      <div key={`dup-${_internalKey}`} className="mb-4">
                         <PlayerHeroCard {...playerProps} team={playerProps.team || ''} />
                       </div>
                     );

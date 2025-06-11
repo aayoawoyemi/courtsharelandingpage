@@ -15,25 +15,25 @@ const PlayerHeroCard = ({ name, photoUrl, price, priceChange, changePercentage, 
   };
 
   return (
-    <div className="bg-gray-800/90 backdrop-blur-sm p-3 rounded-lg shadow-lg w-full max-w-[240px] border border-gray-700 transform scale-90">
-      <div className="flex items-center gap-2">
+    <div className="bg-gray-800/90 backdrop-blur-sm p-4 rounded-lg shadow-lg w-full max-w-[280px] border border-gray-700">
+      <div className="flex items-center gap-3">
         <img 
           src={photoUrl} 
           alt={name} 
-          className="w-10 h-10 rounded-full object-cover border-2 border-gray-700" 
+          className="w-12 h-12 rounded-full object-cover border-2 border-gray-700" 
           onError={handleImageError}
         />
         <div className="flex-1">
           <div className="text-gray-400 text-xs font-medium mb-0.5">
             NBA • {team}
           </div>
-          <h2 className="text-white text-base font-bold">{name}</h2>
+          <h2 className="text-white text-lg font-bold">{name}</h2>
         </div>
       </div>
       
-      <div className="mt-2">
-        <div className="text-white text-xl font-semibold">${price.toFixed(2)}</div>
-        <div className={`text-xs font-medium ${priceChange >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+      <div className="mt-3">
+        <div className="text-white text-2xl font-semibold">${price.toFixed(2)}</div>
+        <div className={`text-sm font-medium ${priceChange >= 0 ? 'text-green-400' : 'text-red-400'}`}>
           {priceChange >= 0 ? '+' : ''}{priceChange.toFixed(2)} ({changePercentage.toFixed(2)}%)
         </div>
       </div>
