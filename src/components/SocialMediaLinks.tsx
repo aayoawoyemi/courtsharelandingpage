@@ -15,10 +15,9 @@ import { useScrollAnimation } from '../hooks/useScrollAnimation';
 interface SocialLinkProps {
   icon: React.ReactNode;
   name: string;
-  delay: number;
 }
 
-const SocialLink: React.FC<SocialLinkProps> = ({ icon, name, delay }) => {
+const SocialLink: React.FC<SocialLinkProps> = ({ icon, name }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -78,17 +77,14 @@ export default function SocialMediaLinks() {
           <SocialLink 
             icon={<FaDiscord />} 
             name="Discord" 
-            delay={0}
           />
           <SocialLink 
             icon={<FaTiktok />} 
             name="TikTok" 
-            delay={100}
           />
           <SocialLink 
             icon={<FaReddit />} 
             name="Reddit" 
-            delay={200}
           />
         </div>
       </div>
