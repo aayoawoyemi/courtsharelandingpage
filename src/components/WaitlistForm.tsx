@@ -19,7 +19,7 @@ export default function WaitlistForm() {
     fetch("/", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams(formData as any).toString(),
+      body: new URLSearchParams(formData as unknown as Record<string, string>).toString(),
     })
       .then(() => {
         console.log("Form successfully submitted to Netlify");
@@ -45,7 +45,7 @@ export default function WaitlistForm() {
       {/* Honeypot field to prevent spam */}
       <p className="hidden">
         <label>
-          Don't fill this out if you're human: <input name="bot-field" />
+          Don{"'"}t fill this out if you{"'"}re human: <input name="bot-field" />
         </label>
       </p>
 
