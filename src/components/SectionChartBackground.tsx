@@ -9,7 +9,7 @@
 
 "use client";
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface SectionChartBackgroundProps {
   opacity?: string;
@@ -18,63 +18,88 @@ interface SectionChartBackgroundProps {
 export default function SectionChartBackground({ 
   opacity = "opacity-30" 
 }: SectionChartBackgroundProps) {
+  // State to track if we're on mobile
+  const [isMobile, setIsMobile] = useState(false);
+  
+  // Update isMobile state on window resize
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    
+    // Set initial value
+    handleResize();
+    
+    // Add event listener
+    window.addEventListener('resize', handleResize);
+    
+    // Cleanup
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Adjust stroke width and spacing for mobile
+  const strokeWidth = isMobile ? 2 : 3;
+  const candleSpacing = isMobile ? 100 : 150;
+  const candleWidth = isMobile ? 8 : 12;
+
   return (
     <div className={`absolute inset-0 z-0 overflow-hidden ${opacity}`}>
       <svg
         className="w-full h-full"
         viewBox="0 0 1200 800"
+        preserveAspectRatio="xMidYMid slice"
         xmlns="http://www.w3.org/2000/svg"
       >
-        {/* Animated chart lines */}
+        {/* Animated chart lines - optimized for mobile */}
         <path
           d="M0,400 Q200,500 400,350 T800,450 T1200,300"
           fill="none"
           stroke="#41B6B2"
-          strokeWidth="3"
+          strokeWidth={strokeWidth}
           className="animate-chart-line-1"
         />
         <path
           d="M0,450 Q300,300 600,500 T1200,400"
           fill="none"
           stroke="#41B6B2"
-          strokeWidth="3" 
+          strokeWidth={strokeWidth} 
           className="animate-chart-line-2"
         />
         <path
           d="M0,350 Q400,450 800,300 T1200,450"
           fill="none"
           stroke="#41B6B2"
-          strokeWidth="3"
+          strokeWidth={strokeWidth}
           className="animate-chart-line-3"
         />
         
-        {/* Stock candles */}
-        {[...Array(8)].map((_, i) => (
+        {/* Stock candles - reduced count on mobile */}
+        {[...Array(isMobile ? 5 : 8)].map((_, i) => (
           <React.Fragment key={i}>
             <rect 
-              x={100 + i * 150} 
+              x={100 + i * candleSpacing} 
               y={300 - Math.sin(i * 0.8) * 50} 
-              width="12" 
-              height="100" 
+              width={candleWidth} 
+              height={isMobile ? 80 : 100} 
               fill="#41B6B2" 
               className="animate-pulse-slow"
               style={{ animationDelay: `${i * 0.3}s` }}
             />
             <line 
-              x1={106 + i * 150} 
+              x1={100 + candleWidth/2 + i * candleSpacing} 
               y1={270 - Math.sin(i * 0.8) * 50} 
-              x2={106 + i * 150} 
+              x2={100 + candleWidth/2 + i * candleSpacing} 
               y2={240 - Math.sin(i * 0.8) * 50}
               stroke="#41B6B2" 
-              strokeWidth="2"
+              strokeWidth={strokeWidth}
             />
             <line 
-              x1={106 + i * 150} 
-              y1={400} 
-              x2={106 + i * 150} 
-              y2={430}
+              x1={100 + candleWidth/2 + i * candleSpacing} 
+              y1={300 + (isMobile ? 80 : 100)} 
+              x2={100 + candleWidth/2 + i * candleSpacing} 
+              y2={330 + (isMobile ? 80 : 100) * 0.3}
               stroke="#41B6B2" 
-              strokeWidth="2"
+              strokeWidth={strokeWidth}
             />
           </React.Fragment>
         ))}
