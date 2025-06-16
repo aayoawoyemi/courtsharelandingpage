@@ -1,10 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function WaitlistForm() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [signupCount, setSignupCount] = useState(12);
+  const totalSpots = 100;
+
+  // Load signup count from localStorage if available
+  useEffect(() => {
+    const savedCount = localStorage.getItem("courtShareSignupCount");
+    if (savedCount) {
+      setSignupCount(parseInt(savedCount));
+    }
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,6 +34,11 @@ export default function WaitlistForm() {
       .then(() => {
         console.log("Form successfully submitted to Netlify");
         setSubmitted(true);
+        
+        // Increment signup count and save to localStorage
+        const newCount = signupCount + 1;
+        setSignupCount(newCount);
+        localStorage.setItem("courtShareSignupCount", newCount.toString());
       })
       .catch((error) => {
         console.error("Form submission error:", error);
@@ -32,43 +47,55 @@ export default function WaitlistForm() {
   };
 
   return (
-    <form
-      name="waitlist"
-      method="POST"
-      data-netlify="true"
-      onSubmit={handleSubmit}
-      className="w-full max-w-sm mx-auto font-sans"
-      aria-label="Join waitlist"
-    >
-      {/* Required hidden fields for Netlify forms */}
-      <input type="hidden" name="form-name" value="waitlist" />
-      
-      {/* Honeypot field to prevent spam */}
-      <p className="hidden">
-        <label>
-          Don{"'"}t fill this out if you{"'"}re human: <input name="bot-field" />
-        </label>
-      </p>
-
-      {/* Accessible header (visually hidden because the main headline is already outside) */}
-      <h3 className="sr-only">Become a Founding Trader</h3>
-
-      <input
-        type="email"
-        name="email"
-        required
-        placeholder="you@example.com"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-600 text-white placeholder-gray-400 mb-6 focus:outline-none focus:ring-2 focus:ring-accent-primary/50 focus:border-transparent"
-      />
-      <button
-        type="submit"
-        className="w-full px-6 py-4 rounded-lg bg-transparent border border-border text-text-primary hover:border-accent-primary hover:text-accent-okc-blue hover:shadow-xl hover:shadow-accent-okc-blue/40 hover:scale-[1.02] hover:-translate-y-0.5 transition-all duration-300 font-bold text-lg disabled:opacity-50 disabled:pointer-events-none"
-        disabled={submitted}
+    <div className="w-full max-w-sm mx-auto font-sans">
+      <form
+        name="waitlist"
+        method="POST"
+        data-netlify="true"
+        onSubmit={handleSubmit}
+        className="w-full"
+        aria-label="Join waitlist"
       >
-        {submitted ? "✓ Added to Waitlist" : "Join the Closed Beta Cohort"}
-      </button>
-    </form>
+        {/* Required hidden fields for Netlify forms */}
+        <input type="hidden" name="form-name" value="waitlist" />
+        
+        {/* Honeypot field to prevent spam */}
+        <p className="hidden">
+          <label>
+            Don{"'"}t fill this out if you{"'"}re human: <input name="bot-field" />
+          </label>
+        </p>
+
+        {/* Accessible header (visually hidden because the main headline is already outside) */}
+        <h3 className="sr-only">Become a Founding Trader</h3>
+
+        <input
+          type="email"
+          name="email"
+          required
+          placeholder="you@example.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-600 text-white placeholder-gray-400 mb-6 focus:outline-none focus:ring-2 focus:ring-accent-primary/50 focus:border-transparent"
+        />
+        <button
+          type="submit"
+          className="w-full px-6 py-4 rounded-lg bg-[#00b3b0] text-white hover:bg-[#00d5d1] hover:shadow-xl hover:shadow-[#00b3b0]/20 hover:scale-[1.02] hover:-translate-y-0.5 transition-all duration-300 font-bold text-lg disabled:opacity-50 disabled:pointer-events-none mb-4"
+          disabled={submitted}
+        >
+          {submitted ? "✓ Access Requested" : "Request Early Access"}
+        </button>
+      </form>
+
+      {/* Live Tracker - Grouped in center */}
+      <div className="mt-4 flex items-center justify-center gap-x-4 text-sm text-text-secondary">
+        <div className="flex items-center gap-x-2">
+          <span className="h-2 w-2 rounded-full bg-[#00b3b0] animate-pulse"></span>
+          <span>Real-Time Signups</span>
+        </div>
+
+        <span>{signupCount}/{totalSpots} spots filled</span>
+      </div>
+    </div>
   );
 } 
