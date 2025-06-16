@@ -1,0 +1,19 @@
+# File Path: netlify.toml
+# Purpose: Defines the build and deployment settings for Netlify, ensuring consistency.
+# Key Components/Logic:
+#   - [build]: Specifies the build command and the directory where the built site is located.
+#   - [[plugins]]: Ensures the essential Netlify plugin for Next.js is used, which handles
+#     server-side rendering, API routes, and other Next.js features automatically.
+# Role in Application: This is the source of truth for Netlify's continuous deployment pipeline.
+
+[build]
+  # This is the standard command to build a Next.js project for production.
+  command = "npm run build"
+  
+  # Next.js static exports build to the "out" directory
+  publish = "out"
+
+# This plugin is essential for deploying Next.js sites on Netlify.
+# It automatically configures redirects, serverless functions for SSR, and more.
+[[plugins]]
+  package = "@netlify/plugin-nextjs" 

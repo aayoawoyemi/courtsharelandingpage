@@ -1,0 +1,136 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: Guidelines and best practices for all new and modified code implementation by Cursor to ensure clarity, quality, scalability, and maintainability.
+globs: ["app/**/*.py", "frontend/**/*.js", "frontend/**/*.jsx", "frontend/**/*.ts", "frontend/**/*.tsx", "*.sql"] # Adjust as needed
+alwaysApply: true
+---
+
+## 📜 Guiding Principles for Code Implementation
+
+- **Clarity & Readability:** Code should be easy to understand, well-commented, and logically structured. Prioritize making the intent clear.
+- **Scalability & Efficiency:** Implement solutions that are performant and can scale with increasing data and user load. Consider database query efficiency, algorithmic complexity, and resource utilization.
+- **Production-Ready & Safe:** Code should be robust, handle errors gracefully, and adhere to security best practices. Avoid introducing vulnerabilities.
+- **Maintainability & Modularity:** Write code that is easy to modify, extend, and debug. Favor smaller, focused functions/components and adhere to separation of concerns.
+- **Consistency:** Follow established patterns and conventions within the project and as outlined in these rules and the `PROJECT_MASTER_GUIDE.md`.
+
+## 📝 File & Code Structure Rules
+
+- **File Header Comments:**
+    - **Purpose:** At the beginning of every new file, and for significantly refactored existing files, include a header comment block.
+    - **Content:**
+        1.  `File Path:` (e.g., `app/routers/portfolio.py`)
+        2.  `Purpose:` A concise (1-2 sentence) description of what the file/module does.
+        3.  `Key Components/Logic:` Briefly list the main classes, functions, or logical blocks within the file.
+        4.  `Role in Application:` Explain how this file fits into the larger application architecture and which other key modules or services it interacts with directly (e.g., "This router handles all API requests for user portfolio data, interacting with `PortfolioService` and using `get_current_active_db_user` for authentication. It returns Pydantic models defined herein to the client."). Be specific about connections.
+    - **Example (Python/FastAPI):**
+        ```python
+        # File Path: app/routers/portfolio.py
+        # Purpose: Defines API endpoints related to user portfolio management, including fetching balances, holdings, and transaction history.
+        # Key Components/Logic:
+        #   - APIRouter instance for portfolio routes.
+        #   - Pydantic models for API request/response (BalanceResponse, PortfolioResponse, etc.).
+        #   - Endpoint functions: get_my_balance, get_my_portfolio, get_my_transactions.
+        # Role in Application: This module provides the HTTP interface for all portfolio-related actions. It uses the `get_current_active_db_user` dependency from `app.core.security` to ensure authentication and retrieve the active user. It then calls service layer functions (to be implemented in `app.services.portfolioService`) to interact with the database models (`User`, `PortfolioItem`, `TradeHistory`, `Player`) and constructs Pydantic responses. It is included in the main FastAPI application in `main.py`.
+        
+        from fastapi import APIRouter, Depends
+        # ... other imports
+        ```
+
+- **Code Block Commenting (Batching):**
+    - **Purpose:** To explain logical sections or "batches" of lines within functions or classes.
+    - **Guideline:** For every ~5-15 lines of code that form a distinct logical step or operation, precede it with a brief comment explaining *what* that block is about to do or *why* it's being done.
+    - **Focus:** Comment the "why" and the "what," not just a restatement of the code.
+    - **Example (Python):**
+        ```python
+        # Fetch the active portfolio items for the user, joining with player data for current prices
+        stmt = (
+            select(PortfolioItem, Player.name, Player.current_price)
+            .join(Player, PortfolioItem.player_id == Player.player_id)
+            .where(PortfolioItem.user_id == current_db_user.id)
+            .where(PortfolioItem.shares > 0)
+        )
+        result = await db.execute(stmt)
+        db_holdings_data = result.all()
+
+        # Initialize structures for response and calculate total holdings value
+        holding_items_pydantic: List[PortfolioHoldingItem] = []
+        total_holdings_value = Decimal("0.00")
+
+        # Iterate through database results, calculate market value, and build Pydantic models
+        for row in db_holdings_data:
+            shares = row.PortfolioItem.quantity
+            current_price = row.current_price
+            # ... calculations ...
+            holding_items_pydantic.append(...)
+        ```
+
+- **Function/Method Docstrings:**
+    - **Python:** Use standard PEP 257 docstrings (e.g., triple quotes) for all public functions and methods. Briefly describe purpose, arguments, and what it returns.
+    - **JavaScript/TypeScript:** Use JSDoc-style comments for functions.
+    - **Focus:** Explain what the function does, its parameters, and what it returns. Mention any key side effects or assumptions.
+
+- **File Length & Modularity:**
+    - **Guideline:** Aim to keep individual files focused on a single responsibility or a cohesive set of related functionalities.
+    * **Soft Limit (Python Backend):** Strive to keep most Python files **under 300-400 lines of code (LOC)**, excluding comments and blank lines. If a file is growing significantly larger, consider if it can be broken down into smaller, more manageable modules or services.
+    * **Soft Limit (React Components):** Strive to keep individual React component files **under 200-300 LOC**. Complex components should be decomposed into smaller, reusable sub-components.
+    - **Rationale:** Smaller files are easier to understand, test, and maintain. This promotes modularity. This is a guideline, not an unbreakable rule, but exceeding it should prompt a review for refactoring opportunities.
+
+## 🛠️ Implementation Quality & Best Practices
+
+- **Refer to `PROJECT_MASTER_GUIDE.md`:** Before implementing significant new features or modifying core logic, always refer to the `PROJECT_MASTER_GUIDE.md` for architectural decisions, tech stack details, and established patterns. If a proposed implementation seems to conflict, raise it for discussion.
+
+- **Efficiency & Scalability:**
+    - **Database Queries:**
+        - Prioritize efficient SQLAlchemy ORM queries. Use `selectinload` or `joinedload` appropriately to avoid N+1 problems when fetching related data.
+        - For complex aggregations or reports where ORM might be inefficient, consider optimized SQL views or carefully crafted raw SQL queries (used sparingly and with justification).
+        - Ensure appropriate database indexes are considered and proposed for new query patterns (via Alembic migrations).
+    - **Algorithms:** Be mindful of algorithmic complexity (Big O notation) for any data processing loops or computations, especially those handling lists or collections.
+    - **Asynchronous Operations (Backend):** Fully leverage `async/await` in the FastAPI backend for all I/O-bound operations (database calls, external API requests) to maintain non-blocking performance.
+
+- **Error Handling:**
+    - Implement robust error handling in API endpoints. Return appropriate HTTP status codes (e.g., 400, 401, 403, 404, 500) and clear JSON error messages.
+    - Use `try...except` blocks to catch potential exceptions in service logic and database operations.
+    - Log errors effectively using `structlog`, providing sufficient context for debugging.
+    - For user-facing errors, messages should be user-friendly; detailed technical errors are for logs.
+
+- **Security:**
+    - Adhere to all principles outlined in the `PROJECT_MASTER_GUIDE.md` regarding security.
+    - Specifically: derive `user_id` from the validated JWT on the backend, validate and sanitize inputs (Pydantic helps here), use parameterized queries (SQLAlchemy ORM helps).
+    - Be mindful of potential vulnerabilities (OWASP Top 10) when implementing new features.
+
+- **Non-Breaking Changes & Impact Awareness:**
+    - **Strive to implement changes in a way that does not negatively impact existing functionality** elsewhere in the project.
+    - Before submitting or finalizing code, actively consider potential side effects or regressions on other modules or features.
+    - **If you suspect a proposed change, however necessary or beneficial, might break, significantly alter, or have unintended consequences for another part of the application, explicitly state this concern and the potential impact.** This allows for a collaborative review and risk mitigation before changes are applied.
+
+- **Root Cause Analysis for Bug Fixes:**
+    - When addressing bugs or issues, **aim to identify and fix the root cause** rather than just patching the observable symptoms.
+    - When proposing a fix, briefly explain the identified root cause.
+    - If a quick symptomatic fix is tactically necessary for immediate relief (e.g., to unblock other development or testing), also identify the underlying root cause and suggest a follow-up task or discussion for a more permanent and robust solution.
+
+- **Testing:**
+    - (This section can be expanded as your testing strategy matures)
+    - For new backend API endpoints or significant business logic changes, consider what unit or integration tests would be appropriate.
+    - Aim for testable code (e.g., separating business logic into services makes it easier to unit test).
+
+- **Code Reusability & DRY (Don't Repeat Yourself):**
+    - Look for opportunities to create reusable utility functions, service methods, or components.
+    - If you find yourself writing similar code blocks in multiple places, consider refactoring into a shared function/module.
+
+- **Questions & Assumptions:**
+    - If requirements are unclear, or if multiple implementation options exist with different trade-offs, **ask clarifying questions** rather than making broad assumptions.
+    - If an assumption *must* be made to proceed, clearly state it in a comment or when presenting the code (e.g., "// Assuming player symbols are unique...").
+
+## 🔄 Iteration & Refinement
+
+- **Adherence to Task Scope:** Focus on implementing the current Taskmaster subtask. If related ideas or potential refactors for *other* areas arise, note them down for future consideration/tasks rather than expanding the current scope excessively.
+- **Proactive Suggestions:** If, while working on a task, you identify a clear opportunity to improve existing code directly related to the task for efficiency, security, or clarity in a non-trivial way, please propose the change with a brief rationale.
+- **Learning & Adapting:** This set of rules will evolve. If new patterns emerge or existing rules become outdated, we will update this document.
+
+
+
+---

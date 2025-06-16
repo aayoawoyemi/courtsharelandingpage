@@ -1,0 +1,174 @@
+@import "tailwindcss";
+
+/* Custom scroll stream animation (fallback) */
+@keyframes scroll-stream {
+  0% {
+    transform: translateY(0);
+    will-change: transform;
+  }
+  100% {
+    transform: translateY(-50%);
+    will-change: transform;
+  }
+}
+
+.animate-scroll-stream {
+  animation: scroll-stream 30s linear infinite;
+  transform: translate3d(0, 0, 0); /* Force GPU acceleration */
+  backface-visibility: hidden; /* Additional performance optimization */
+  perspective: 1000; /* Another optimization for smoother animations */
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(0.8);
+    opacity: 0.3;
+  }
+}
+
+body {
+  @apply bg-black text-white;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Chart bar pulsing animation */
+@keyframes chart-bar {
+  0%, 100% {
+    transform: scaleY(0.4);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+.animate-chart-bar {
+  animation-name: chart-bar;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+/* Chart line animations */
+@keyframes chart-line-move-1 {
+  0% {
+    transform: translateY(10px);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(-10px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(10px);
+    opacity: 0.6;
+  }
+}
+
+@keyframes chart-line-move-2 {
+  0% {
+    transform: translateY(-15px);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(15px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-15px);
+    opacity: 0.7;
+  }
+}
+
+@keyframes chart-line-move-3 {
+  0% {
+    transform: translateY(5px);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(-20px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(5px);
+    opacity: 0.8;
+  }
+}
+
+@keyframes pulse-slow {
+  0% {
+    opacity: 0.4;
+    transform: scaleY(0.85);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scaleY(1.05);
+  }
+  100% {
+    opacity: 0.4;
+    transform: scaleY(0.85);
+  }
+}
+
+.animate-chart-line-1 {
+  animation: chart-line-move-1 15s ease-in-out infinite;
+}
+
+.animate-chart-line-2 {
+  animation: chart-line-move-2 18s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+.animate-chart-line-3 {
+  animation: chart-line-move-3 20s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 7s ease-in-out infinite;
+}
+
+/* Embla Carousel styles */
+.embla__container { 
+  display: flex; 
+}
+.embla__slide { 
+  flex: 0 0 100%; 
+}
+
+/* Fade-in animation for sub-headline */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Progress bar animation */
+@keyframes progressBar {
+  0% {
+    width: 0%;
+    opacity: 0.8;
+  }
+  50% {
+    width: 70%;
+    opacity: 1;
+  }
+  100% {
+    width: 100%;
+    opacity: 0.8;
+  }
+}
