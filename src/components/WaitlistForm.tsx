@@ -5,16 +5,18 @@ import { useState, useEffect } from "react";
 export default function WaitlistForm() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const [signupCount, setSignupCount] = useState(12);
-  const totalSpots = 100;
-
-  // Load signup count from localStorage if available
-  useEffect(() => {
-    const savedCount = localStorage.getItem("courtShareSignupCount");
-    if (savedCount) {
-      setSignupCount(parseInt(savedCount));
+  
+  // Initialize counter with localStorage value if available, otherwise use 25
+  const [signupCount, setSignupCount] = useState(() => {
+    // Check if we're in the browser environment
+    if (typeof window !== 'undefined') {
+      const savedCount = localStorage.getItem("courtShareSignupCount");
+      return savedCount ? parseInt(savedCount) : 25;
     }
-  }, []);
+    return 25; // Default for server-side rendering
+  });
+  
+  const totalSpots = 100;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
