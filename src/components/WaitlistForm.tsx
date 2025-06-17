@@ -6,16 +6,8 @@ export default function WaitlistForm() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
   
-  // Initialize counter with localStorage value if available, otherwise use 25
-  const [signupCount, setSignupCount] = useState(() => {
-    // Check if we're in the browser environment
-    if (typeof window !== 'undefined') {
-      const savedCount = localStorage.getItem("courtShareSignupCount");
-      return savedCount ? parseInt(savedCount) : 25;
-    }
-    return 25; // Default for server-side rendering
-  });
-  
+  // Fixed counter without auto-incrementing
+  const signupCount = 25;
   const totalSpots = 100;
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -36,11 +28,6 @@ export default function WaitlistForm() {
       .then(() => {
         console.log("Form successfully submitted to Netlify");
         setSubmitted(true);
-        
-        // Increment signup count and save to localStorage
-        const newCount = signupCount + 1;
-        setSignupCount(newCount);
-        localStorage.setItem("courtShareSignupCount", newCount.toString());
       })
       .catch((error) => {
         console.error("Form submission error:", error);
