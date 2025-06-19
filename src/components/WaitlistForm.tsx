@@ -7,7 +7,7 @@ export default function WaitlistForm() {
   const [submitted, setSubmitted] = useState(false);
   
   // Fixed counter without auto-incrementing
-  const signupCount = 25;
+  const signupCount = 31;
   const totalSpots = 100;
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -83,7 +83,7 @@ export default function WaitlistForm() {
           <span>Real-Time Signups</span>
         </div>
 
-        <span>{signupCount}/{totalSpots} spots filled</span>
+        <span>{signupCount}/{totalSpots} traders confirmed</span>
       </div>
     </div>
   );
