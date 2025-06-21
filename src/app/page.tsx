@@ -8,8 +8,6 @@ import SectionChartBackground from '../components/SectionChartBackground';
 import CourtShareLogo from '../components/CourtShareLogo';
 import SocialMediaLinks from '../components/SocialMediaLinks';
 import PulsingDots from '../components/PulsingDots';
-import Link from 'next/link';
-import { FaTrophy, FaUserPlus, FaChartLine } from 'react-icons/fa';
 import CustomVideoPlayer from '../components/CustomVideoPlayer';
 
 // Scroll Arrow Component
@@ -155,7 +153,7 @@ export default function Home() {
             <ScrollReveal delay={200}>
               {/* Game Plan Section */}
               <div className="mt-12 space-y-6">
-                <h4 className="font-bold text-xl text-text-display mb-4">Here's the game plan:</h4>
+                <h4 className="font-bold text-xl text-text-display mb-4">Here&apos;s the game plan:</h4>
                 
                 {/* Step 1 */}
                 <div>
@@ -172,7 +170,7 @@ export default function Home() {
                 {/* Step 3 */}
                 <div>
                   <h5 className="font-display font-bold text-lg text-accent-primary">3. The Goal</h5>
-                  <p className="text-text-secondary">Climb the leaderboard, earn your permanent "Founding Trader" badge, and help shape the future of the platform.</p>
+                  <p className="text-text-secondary">Climb the leaderboard, earn your permanent &quot;Founding Trader&quot; badge, and help shape the future of the platform.</p>
                 </div>
               </div>
             </ScrollReveal>
