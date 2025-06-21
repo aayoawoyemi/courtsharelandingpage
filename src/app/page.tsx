@@ -261,7 +261,7 @@ export default function Home() {
               <ScrollReveal delay={100}>
                 <div>
                   <h3 className="text-lg sm:text-xl md:text-3xl font-semibold mb-2 sm:mb-3 text-text-display">Exclusive Beta Access</h3>
-                  <p className="text-sm sm:text-base text-text-secondary">As a Founding Trader, you'll get early access to the beta platform, special perks, and a direct line to the development team to help shape the future of CourtShare.</p>
+                  <p className="text-sm sm:text-base text-text-secondary">As a Founding Trader, you&apos;ll get early access to the beta platform, special perks, and a direct line to the development team to help shape the future of CourtShare.</p>
                 </div>
               </ScrollReveal>
             </div>
@@ -277,7 +277,7 @@ export default function Home() {
               <ScrollReveal delay={300}>
                 <div>
                   <h3 className="text-lg sm:text-xl md:text-3xl font-semibold mb-2 sm:mb-3 text-text-display">The Future of NBA Fandom</h3>
-                  <p className="text-sm sm:text-base text-text-secondary">We're building more than just another fantasy sports app. CourtShare is a new way to engage with the NBA, where your knowledge and insights are valued and rewarded.</p>
+                  <p className="text-sm sm:text-base text-text-secondary">We&apos;re building more than just another fantasy sports app. CourtShare is a new way to engage with the NBA, where your knowledge and insights are valued and rewarded.</p>
                 </div>
               </ScrollReveal>
             </div>
