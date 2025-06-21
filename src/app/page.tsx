@@ -8,6 +8,26 @@ import SectionChartBackground from '../components/SectionChartBackground';
 import CourtShareLogo from '../components/CourtShareLogo';
 import SocialMediaLinks from '../components/SocialMediaLinks';
 import PulsingDots from '../components/PulsingDots';
+import Link from 'next/link';
+import { FaTrophy, FaUserPlus, FaChartLine } from 'react-icons/fa';
+import CustomVideoPlayer from '../components/CustomVideoPlayer';
+
+// Scroll Arrow Component
+const ScrollArrow = () => (
+  <div className="absolute bottom-8 left-0 right-0 flex justify-center z-30 animate-bounce-slow">
+    <div className="h-12 w-6 flex justify-center">
+      <svg width="24" height="36" viewBox="0 0 24 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path 
+          d="M12 2L12 33M12 33L22 23M12 33L2 23" 
+          stroke="#00b3b0" 
+          strokeWidth="3" 
+          strokeLinecap="round" 
+          strokeLinejoin="round"
+        />
+      </svg>
+    </div>
+  </div>
+);
 
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
@@ -87,19 +107,133 @@ export default function Home() {
             <PlayerCarousel />
           </div>
         </div>
+        
+        {/* Scroll indicator */}
+        <ScrollArrow />
       </section>
 
       {/* Section Separator / Spacer */}
       <div className="h-16 bg-gradient-to-b from-background to-surface"></div>
 
-      {/* Section 2: Founding Trader Section */}
-      <section className="relative bg-background text-text-primary py-20 sm:py-32 px-4 sm:px-6 md:px-16 overflow-hidden">
-        {/* Animated Chart Background */}
-        <SectionChartBackground opacity="opacity-20 sm:opacity-30" />
+      {/* Section 3: Future is Loading with CourtShare Beta Challenge */}
+      <section className="relative min-h-screen w-full flex items-center">
+        {/* Background Image: Victor Wembanyama */}
+        <div className="absolute top-0 right-0 h-full w-full md:w-3/5 lg:w-1/2">
+          <img 
+            src="/download (3).jpeg" 
+            alt="An atmospheric photo of Victor Wembanyama"
+            className="w-full h-full object-cover"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-gradient-to-l from-transparent via-black/70 to-black"></div>
+        </div>
+
+        {/* Left-Aligned Content */}
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-8 py-16">
+          <div className="max-w-xl">
+            <ScrollReveal>
+              {/* Main Headline */}
+              <h2 className="font-display font-extrabold text-6xl md:text-8xl text-text-display leading-tight">
+                THE FUTURE IS LOADING...
+              </h2>
+            </ScrollReveal>
+            
+            <ScrollReveal delay={100}>
+              {/* Sub-headline */}
+              <h3 className="font-display font-bold text-3xl md:text-4xl text-text-primary mt-12 whitespace-nowrap">
+                Introducing: Own the Off-Season Challenge
+              </h3>
+            </ScrollReveal>
+            
+            <ScrollReveal delay={150}>
+              {/* Explanatory Paragraph */}
+              <p className="mt-4 text-lg text-text-secondary max-w-lg">
+                This is your chance to prove your basketball IQ during the most speculative time of the year. The challenge is simple: build the most valuable portfolio by trading on the narratives, rumors, and hype of the NBA Draft, Free Agency, and Summer League.
+              </p>
+            </ScrollReveal>
+
+            <ScrollReveal delay={200}>
+              {/* Game Plan Section */}
+              <div className="mt-12 space-y-6">
+                <h4 className="font-bold text-xl text-text-display mb-4">Here's the game plan:</h4>
+                
+                {/* Step 1 */}
+                <div>
+                  <h5 className="font-display font-bold text-lg text-accent-primary">1. Your Stake</h5>
+                  <p className="text-text-secondary">Every member of the Founding Trader cohort will receive $1,000 in paper trading cash to get started.</p>
+                </div>
+                
+                {/* Step 2 */}
+                <div>
+                  <h5 className="font-display font-bold text-lg text-accent-primary">2. The Timeline</h5>
+                  <p className="text-text-secondary">The challenge officially kicks off on NBA Draft Night (June 26th) and will run through the entire off-season with monthly competitive sprints.</p>
+                </div>
+
+                {/* Step 3 */}
+                <div>
+                  <h5 className="font-display font-bold text-lg text-accent-primary">3. The Goal</h5>
+                  <p className="text-text-secondary">Climb the leaderboard, earn your permanent "Founding Trader" badge, and help shape the future of the platform.</p>
+                </div>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal delay={250}>
+              {/* Final Details and Link */}
+              <div className="mt-12 border-t border-gray-800 pt-6">
+                <p className="text-text-secondary">
+                  Full details, rules, and live discussion will be shared exclusively in our private Discord community.
+                </p>
+                <div className="inline-block mt-4 text-lg text-accent-primary font-bold hover:text-accent-primary/80 transition-colors cursor-pointer">
+                  See the Briefing & Get Your Invite →
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
+        </div>
         
-        {/* Content Layer */}
+        {/* Scroll indicator */}
+        <ScrollArrow />
+      </section>
+
+      {/* Section 5: The Future is Now with Email CTA */}
+      <section className="bg-black min-h-screen w-full flex flex-col items-center justify-center text-center p-4 sm:p-8">
+        {/* Main content container */}
+        <div className="w-full max-w-4xl">
+          <ScrollReveal>
+            {/* Headline */}
+            <h1 className="font-display font-extrabold text-5xl sm:text-7xl text-text-display mb-12 whitespace-nowrap">
+                THE FUTURE IS <span className="text-accent-primary inline-block">NOW</span>
+            </h1>
+          </ScrollReveal>
+
+          <ScrollReveal delay={100}>
+            {/* Custom Video Player */}
+            <div className="mb-12 shadow-2xl rounded-xl border border-gray-800">
+                <CustomVideoPlayer src="/tiktok 2.mp4" />
+                <div className="text-center mt-3">
+                  <p className="text-xs text-text-secondary/80 italic">
+                    Video courtesy of <a href="https://www.tiktok.com/@ballgamebagle" target="_blank" rel="noopener noreferrer" className="underline hover:text-accent-primary transition-colors">ballgamebagel</a>
+                  </p>
+                </div>
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal delay={200}>
+            {/* Final CTA Section */}
+            <div className="w-full max-w-lg mx-auto">
+                <p className="text-lg text-text-primary mb-6">
+                    Join the exclusive community of Founding Traders and be part of the evolution of NBA fandom.
+                </p>
+                <WaitlistForm />
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* Founding Trader Section */}
+      <section className="relative bg-background text-text-primary py-20 sm:py-32 px-4 sm:px-6 md:px-16 overflow-hidden">
+        <SectionChartBackground opacity="opacity-20 sm:opacity-30" />
         <div className="relative z-10">
-          {/* Heading & Subtitle */}
           <div className="text-center mb-12 sm:mb-20 max-w-4xl mx-auto px-2">
             <ScrollReveal>
               <h2 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-accent-primary mb-2 sm:mb-4">
@@ -111,9 +245,7 @@ export default function Home() {
             </ScrollReveal>
           </div>
 
-          {/* Content Grid */}
           <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 sm:gap-16">
-            {/* Left Copy Column */}
             <div className="space-y-10 sm:space-y-14 leading-relaxed">
               <ScrollReveal>
                 <div>
@@ -150,7 +282,6 @@ export default function Home() {
               </ScrollReveal>
             </div>
 
-            {/* Right Visual Column – Logo */}
             <div className="flex items-center justify-center">
               <ScrollReveal delay={150}>
                 <CourtShareLogo />
@@ -158,63 +289,11 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Social Media Links */}
           <div className="mt-16 sm:mt-24">
             <SocialMediaLinks />
           </div>
 
-          {/* Decorative Pulsing Dots */}
           <PulsingDots count={isMobile ? 5 : 8} />
-        </div>
-      </section>
-
-      {/* Section 3: Wembanyama Loading Page */}
-      <section className="relative h-screen w-full overflow-hidden bg-background">
-        
-        {/* Layer 1: Background Image - Right Aligned */}
-        <div className="absolute top-0 right-0 h-full w-3/5 z-0">
-          <img 
-            src="/download (3).jpeg"
-            alt=""
-            aria-hidden="true"
-            className="w-full h-full object-cover object-right"
-            loading="lazy"
-          />
-        </div>
-
-        {/* Layer 2: Black Gradient Overlay */}
-        <div className="absolute inset-0 z-10 bg-gradient-to-r from-black via-black/90 to-transparent"></div>
-
-        {/* Layer 3: Content */}
-        <div className="relative z-20 h-full w-full max-w-7xl mx-auto px-4 sm:px-8 flex flex-col justify-center">
-          
-          {/* Left Column: Content & CTA */}
-          <div className="flex flex-col gap-5 sm:gap-6 text-center md:text-left mb-6 md:mb-0 md:max-w-[50%] lg:max-w-[520px]">
-            <ScrollReveal>
-              <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-text-display leading-[0.85] tracking-[-0.015em]">
-                THE FUTURE IS LOADING...
-              </h2>
-            </ScrollReveal>
-            
-            <ScrollReveal delay={100}>
-              {/* Animated Progress Bar */}
-              <div className="w-full bg-surface/30 h-2 rounded-full overflow-hidden">
-                <div className="h-full bg-accent-primary rounded-full w-0 animate-progress"></div>
-              </div>
-            </ScrollReveal>
-            
-            <ScrollReveal delay={200}>
-              <p className="text-base sm:text-lg md:text-xl text-text-primary max-w-lg mx-auto md:mx-0 leading-relaxed font-medium mt-4">
-                Be the first to know when Court Share launches. Early access members receive exclusive perks and founding trader status.
-              </p>
-            </ScrollReveal>
-            
-            <ScrollReveal delay={300}>
-              <div className="mt-4">
-                <WaitlistForm />
-              </div>
-            </ScrollReveal>
-          </div>
         </div>
       </section>
     </main>

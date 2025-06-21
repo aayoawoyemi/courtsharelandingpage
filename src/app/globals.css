@@ -172,3 +172,29 @@ html {
     opacity: 0.8;
   }
 }
+
+.animate-progress {
+  animation: progressBar 3s ease-in-out forwards;
+}
+
+/* Gradient radial background */
+.bg-gradient-radial {
+  background-image: radial-gradient(var(--tw-gradient-stops));
+}
+
+/* Scroll arrow bounce animation */
+@keyframes bounce-slow {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-12px);
+  }
+  60% {
+    transform: translateY(-6px);
+  }
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 2s ease-in-out infinite;
+}
