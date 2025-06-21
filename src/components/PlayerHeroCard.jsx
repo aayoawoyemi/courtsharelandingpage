@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import dynamic from 'next/dynamic';
 
 const SparklineChart = dynamic(() => import('./SparklineChart'), {
@@ -9,25 +9,6 @@ const SparklineChart = dynamic(() => import('./SparklineChart'), {
 });
 
 const PlayerHeroCard = ({ name, photoUrl, price, priceChange, changePercentage, chartData, team }) => {
-  const [isMobile, setIsMobile] = useState(false);
-
-  // Check for mobile viewport
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 640);
-    };
-    
-    // Set initial value
-    checkMobile();
-    
-    // Add event listener for resize
-    window.addEventListener('resize', checkMobile);
-    
-    return () => {
-      window.removeEventListener('resize', checkMobile);
-    };
-  }, []);
-
   // For development, use a default image if the player image is missing
   const handleImageError = (e) => {
     e.target.src = 'https://via.placeholder.com/100';

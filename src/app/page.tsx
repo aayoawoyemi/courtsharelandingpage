@@ -282,6 +282,15 @@ export default function Home() {
               </ScrollReveal>
             </div>
           </div>
+          
+          <div className="mt-16 sm:mt-24 flex flex-col items-center gap-y-12 sm:gap-y-16">
+            <ScrollReveal delay={150}>
+                <CourtShareLogo />
+            </ScrollReveal>
+            <SocialMediaLinks />
+          </div>
+
+          <PulsingDots count={isMobile ? 5 : 8} />
         </div>
       </section>
     </main>
