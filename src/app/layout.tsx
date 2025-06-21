@@ -73,6 +73,14 @@ export const metadata = {
     shortcut: '/favicon-16x16.png',        // optional
     apple: '/apple-touch-icon.png',        // 180×180
   },
+
+  // —— Viewport settings ——————————
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 5,
+    userScalable: true,
+  },
 };
 
 export default function RootLayout({

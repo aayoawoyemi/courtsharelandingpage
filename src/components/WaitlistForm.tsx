@@ -65,11 +65,11 @@ export default function WaitlistForm() {
           placeholder="you@example.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-600 text-white placeholder-gray-400 mb-6 focus:outline-none focus:ring-2 focus:ring-accent-primary/50 focus:border-transparent"
+          className="w-full px-3 sm:px-4 py-2 sm:py-3 rounded-lg bg-gray-800 border border-gray-600 text-white placeholder-gray-400 mb-4 sm:mb-6 focus:outline-none focus:ring-2 focus:ring-accent-primary/50 focus:border-transparent text-sm sm:text-base"
         />
         <button
           type="submit"
-          className="w-full px-6 py-4 rounded-lg bg-[#00b3b0] text-white hover:bg-[#00d5d1] hover:shadow-xl hover:shadow-[#00b3b0]/20 hover:scale-[1.02] hover:-translate-y-0.5 transition-all duration-300 font-bold text-lg disabled:opacity-50 disabled:pointer-events-none mb-4"
+          className="w-full px-4 sm:px-6 py-3 sm:py-4 rounded-lg bg-[#00b3b0] text-white hover:bg-[#00d5d1] hover:shadow-xl hover:shadow-[#00b3b0]/20 hover:scale-[1.02] hover:-translate-y-0.5 transition-all duration-300 font-bold text-base sm:text-lg disabled:opacity-50 disabled:pointer-events-none mb-3 sm:mb-4"
           disabled={submitted}
         >
           {submitted ? "✓ Access Requested" : "Request Early Access"}
@@ -77,9 +77,9 @@ export default function WaitlistForm() {
       </form>
 
       {/* Live Tracker - Grouped in center */}
-      <div className="mt-4 flex items-center justify-center gap-x-4 text-sm text-text-secondary">
-        <div className="flex items-center gap-x-2">
-          <span className="h-2 w-2 rounded-full bg-[#00b3b0] animate-pulse"></span>
+      <div className="mt-2 sm:mt-4 flex items-center justify-center gap-x-2 sm:gap-x-4 text-xs sm:text-sm text-text-secondary">
+        <div className="flex items-center gap-x-1 sm:gap-x-2">
+          <span className="h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-[#00b3b0] animate-pulse"></span>
           <span>Real-Time Signups</span>
         </div>
 

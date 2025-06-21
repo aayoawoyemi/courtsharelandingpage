@@ -9,6 +9,7 @@ import { mockPlayerData } from '../data/mockPlayerData';
 export default function PlayerCarousel() {
   const [prefersReduced, setPrefersReduced] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -16,18 +17,32 @@ export default function PlayerCarousel() {
     
     const handler = (e: MediaQueryListEvent) => setPrefersReduced(e.matches);
     mediaQuery.addEventListener('change', handler);
+
+    // Check for mobile viewport
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
     
-    return () => mediaQuery.removeEventListener('change', handler);
+    // Set initial value
+    checkMobile();
+    
+    // Add event listener for resize
+    window.addEventListener('resize', checkMobile);
+    
+    return () => {
+      mediaQuery.removeEventListener('change', handler);
+      window.removeEventListener('resize', checkMobile);
+    }
   }, []);
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { 
       loop: true,
-      duration: prefersReduced ? 60 : 30,
+      duration: prefersReduced ? 60 : isMobile ? 20 : 30,
       startIndex: 0,
       skipSnaps: true
     },
-    [Autoplay({ delay: prefersReduced ? 6000 : 4000, stopOnInteraction: false })]
+    [Autoplay({ delay: prefersReduced ? 6000 : isMobile ? 3000 : 4000, stopOnInteraction: false })]
   );
 
   const onSelect = useCallback(() => {
@@ -60,7 +75,9 @@ export default function PlayerCarousel() {
               style={{
                 transform: isActive 
                   ? 'translateY(0px) rotateY(0deg) translateX(0px)' 
-                  : 'translateY(8px) rotateY(2deg) translateX(-8px)',
+                  : isMobile
+                    ? 'translateY(4px) rotateY(1deg) translateX(-4px)'
+                    : 'translateY(8px) rotateY(2deg) translateX(-8px)',
                 filter: isActive 
                   ? 'saturate(1) contrast(1)' 
                   : 'saturate(0.7) contrast(0.8)',
